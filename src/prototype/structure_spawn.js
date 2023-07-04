@@ -1,8 +1,8 @@
 var roleList = ['harvester', 'upgrader', 'builder', 'mover', 'repair'];
 
-const minHarvesterCount = 2;
+const minHarvesterCount = 3;
 const minMoverCount = 2;
-const minBuilderCount = 4;
+const minBuilderCount = 3;
 const minUpgraderCount = 4;
 const minRepairCount = 2;
 
@@ -15,7 +15,7 @@ StructureSpawn.prototype.spawnRequireCreeps = function () {
         numberOfCreeps[role] = _.sum(creepsInRoom, (c) => c.memory.role == role);
     }
 
-    if (this.room.energyAvailable > 0) {
+    if (this.room.energyAvailable == this.room.energyCapacityAvailable) {
         if (numberOfCreeps['harvester'] < minHarvesterCount) {
             this.createHarvester();
         }
@@ -40,16 +40,11 @@ StructureSpawn.prototype.createHarvester = function () {
 
     //初期設定
     let body = [];
-    body.push(WORK);
-    body.push(CARRY);
-    body.push(MOVE);
-
-    let numberOfParts = Math.floor((energy - 200) / 250);
+    let numberOfParts = Math.floor(energy / 200);
+    numberOfParts = Math.min(Math.floor(50 / 3), numberOfParts);
     for (let i = 0; i < numberOfParts; i++) {
         body.push(WORK);
-        body.push(WORK);
-    }
-    for (let i = 0; i < numberOfParts; i++) {
+        body.push(CARRY);
         body.push(MOVE);
     }
 
@@ -65,18 +60,11 @@ StructureSpawn.prototype.createBuilder = function () {
 
     //初期設定
     let body = [];
-    body.push(WORK);
-    body.push(CARRY);
-    body.push(MOVE);
-
-    let numberOfParts = Math.floor((energy - 200) / 200);
+    let numberOfParts = Math.floor(energy / 200);
+    numberOfParts = Math.min(Math.floor(50 / 3), numberOfParts);
     for (let i = 0; i < numberOfParts; i++) {
         body.push(WORK);
-    }
-    for (let i = 0; i < numberOfParts; i++) {
         body.push(CARRY);
-    }
-    for (let i = 0; i < numberOfParts; i++) {
         body.push(MOVE);
     }
 
@@ -92,18 +80,11 @@ StructureSpawn.prototype.createUpgrader = function () {
 
     //初期設定
     let body = [];
-    body.push(WORK);
-    body.push(CARRY);
-    body.push(MOVE);
-
-    let numberOfParts = Math.floor((energy - 200) / 200);
+    let numberOfParts = Math.floor(energy / 200);
+    numberOfParts = Math.min(Math.floor(50 / 3), numberOfParts);
     for (let i = 0; i < numberOfParts; i++) {
         body.push(WORK);
-    }
-    for (let i = 0; i < numberOfParts; i++) {
         body.push(CARRY);
-    }
-    for (let i = 0; i < numberOfParts; i++) {
         body.push(MOVE);
     }
 
@@ -120,18 +101,11 @@ StructureSpawn.prototype.createMover = function () {
 
     //初期設定
     let body = [];
-    body.push(WORK);
-    body.push(CARRY);
-    body.push(MOVE);
-
-    let numberOfParts = Math.floor((energy - 200) / 250);
+    let numberOfParts = Math.floor(energy / 200);
+    numberOfParts = Math.min(Math.floor(50 / 3), numberOfParts);
     for (let i = 0; i < numberOfParts; i++) {
+        body.push(WORK);
         body.push(CARRY);
-        body.push(CARRY);
-        body.push(CARRY);
-    }
-    for (let i = 0; i < numberOfParts; i++) {
-        body.push(MOVE);
         body.push(MOVE);
     }
 
@@ -148,18 +122,11 @@ StructureSpawn.prototype.createRepair = function () {
 
     //初期設定
     let body = [];
-    body.push(WORK);
-    body.push(CARRY);
-    body.push(MOVE);
-
-    let numberOfParts = Math.floor((energy - 200) / 200);
+    let numberOfParts = Math.floor(energy / 200);
+    numberOfParts = Math.min(Math.floor(50 / 3), numberOfParts);
     for (let i = 0; i < numberOfParts; i++) {
         body.push(WORK);
-    }
-    for (let i = 0; i < numberOfParts; i++) {
         body.push(CARRY);
-    }
-    for (let i = 0; i < numberOfParts; i++) {
         body.push(MOVE);
     }
 
