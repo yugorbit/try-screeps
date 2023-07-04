@@ -1,5 +1,6 @@
 
 require('prototype_structure_spawn');
+require('prototype_structure_tower');
 
 var roleHarvester = require('role_harvester');
 var roleUpgrader = require('role_upgrader');
@@ -34,6 +35,14 @@ module.exports.loop = function () {
             roleRepair.run(creep);
         }
     }
+
+    var towers = _.filter(Game.structures, structure => structure.structureType == STRUCTURE_TOWER);
+    // for each tower
+    for (let tower of towers) {
+        // run tower logic
+        tower.defend();
+    }
+
 
     //spawn creeps
     for (let spawnName in Game.spawns) {
